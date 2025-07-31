@@ -2,22 +2,21 @@ package com.carrental;
 
 public class Car {
 
-    private int carId;
+    private String carNumber;
     private String carBrand;
     private String carModel;
     private double carBasePricePerDay;
     private boolean isAvailable=true;
 
-    Car(int carId, String carBrand, String carModel, double carBasePricePerDay){
-
-        this.carId=carId;
+    Car(String carNumber, String carBrand, String carModel, int carBasePricePerDay){
+        this.carNumber=carNumber;
         this.carBrand=carBrand;
         this.carModel=carModel;
         this.carBasePricePerDay=carBasePricePerDay;
     }
 
-    public int getCarId(){
-        return carId;
+    public String getCarNumber(){
+        return carNumber;
     }
 
     public String getCarBrand(){
