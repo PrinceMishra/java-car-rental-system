@@ -160,7 +160,7 @@ public class CarRentalSystem {
                     System.out.println("Car Brand        :"+selectedCar.getCarBrand());
                     System.out.println("Car Model        :"+selectedCar.getCarModel());
                     System.out.println("Car Rent Days    :"+carRentDays);
-                    System.out.printf("Total Price       : $%.2f%n",totalPrice);
+                    System.out.printf("Total Price       :$%.2f%n",totalPrice);
 
                     System.out.println("Confirm renting this car (Y/N): ");
                     String confirm =sc.nextLine();
@@ -180,14 +180,13 @@ public class CarRentalSystem {
             else if (choice==2) {
                 System.out.println("🔄 Returning a car...");
                 System.out.println("---------------------");
-                System.out.println("Enter car the Id you want to return");
-                String carId = sc.nextLine();
-                System.out.println(carId);
+                System.out.println("Enter the car number you want to return");
+                String carNumber= sc.nextLine();
 
                 Car carToReturn= null;
                 for(Car car: cars)
                 {
-                    if(car.getCarNumber().equals(carId)&&car.isAvailable()){
+                    if(car.getCarNumber().equals(carNumber) && !car.isAvailable()){
                         carToReturn = car;
                         break;
                     }
@@ -204,8 +203,22 @@ public class CarRentalSystem {
                     }
 
                     if(customer!=null){
+
+                        // storing the data because if return the car data will be no more
+                        int rentalDays=0;
+                        for(Rental rental:rentals)
+                        {
+                            if(carToReturn.equals(rental.getCar())){
+                                rentalDays=rental.getRentDays();
+                            }
+                        }
+                        double totalAmount=rentalDays*carToReturn.getCarBasePricePerDay();
+                        // returning the car
                         returnCar(carToReturn);
-                        System.out.println("Car returned successfully by " + customer.getCustomerName());
+                        System.out.println("✅ Car returned successfully: " + carToReturn.getCarBrand() + " " + carToReturn.getCarModel() + " [" + carToReturn.getCarNumber() + "]");
+
+                        System.out.printf("🕒 Rental Duration  : %d days%n",rentalDays);
+                        System.out.printf("💰 Total Amount Due: $%.2f%n", totalAmount);
                     }
                     else {
                         System.out.println("Car was not returned or rental information is missing");
